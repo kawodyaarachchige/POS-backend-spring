@@ -2,30 +2,32 @@ package org.example.posspring.entity.impl;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.posspring.entity.SuperEntity;
-
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "order_details")
-public class OrderDetails  implements SuperEntity {
+@Builder
+public class OrderDetails implements SuperEntity {
     @EmbeddedId
     private OderItemId id;
-    @MapsId("order_id")
+
+    @MapsId("orderId")  // Corrected
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
-    @MapsId("item_id")
+
+    @MapsId("itemId")  // Corrected
     @ManyToOne
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "item_id", nullable = false)
     private Item item;
+
     private int qty;
     private double unit_price;
     private double total;
-
 }

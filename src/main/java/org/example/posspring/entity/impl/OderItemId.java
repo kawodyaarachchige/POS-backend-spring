@@ -2,6 +2,7 @@ package org.example.posspring.entity.impl;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.posspring.entity.SuperEntity;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OderItemId implements SuperEntity {
     private String orderId;
     private String itemId;

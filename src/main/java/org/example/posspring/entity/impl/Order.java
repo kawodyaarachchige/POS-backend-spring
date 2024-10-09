@@ -2,6 +2,7 @@ package org.example.posspring.entity.impl;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.posspring.entity.SuperEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "orders")
+@Builder
 public class Order implements SuperEntity {
     @Id
     private String id;
