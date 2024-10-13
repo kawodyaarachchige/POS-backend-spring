@@ -34,6 +34,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void updateItem(String item_id, ItemDTO itemDto) {
 
+
     }
 
     @Override
@@ -48,6 +49,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDTO> getAllItems() {
-        return List.of();
+        return mapper.mapToItemDtoList(itemDao.findAll());
     }
 }
