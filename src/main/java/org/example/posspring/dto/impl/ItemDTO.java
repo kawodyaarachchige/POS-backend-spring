@@ -10,7 +10,6 @@ import org.example.posspring.dto.SuperDTO;
 @Builder
 public class ItemDTO implements SuperDTO, ItemStatus {
     private String item_id;
-    private String name;
     private String description;
     private double price;
     private int quantity;

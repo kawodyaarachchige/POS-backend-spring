@@ -35,6 +35,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateItem(String item_id, ItemDTO itemDto) {
+        Item fetchedItem = itemDao.getReferenceById(item_id);
+        if (fetchedItem == null) {
+            throw new ItemNotFoundException("Item not found");
+        }
+        fetchedItem.setDescription(itemDto.getDescription());
+        fetchedItem.setQuantity(itemDto.getQuantity());
+        fetchedItem.setPrice(itemDto.getPrice());
+        itemDao.save(fetchedItem);
 
 
     }

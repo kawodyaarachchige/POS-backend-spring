@@ -67,4 +67,23 @@ public class ItemController {
         }
     }
 
+    @PutMapping(value = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateItem(@PathVariable("itemId") String item_id, @RequestBody ItemDTO itemDto){
+        boolean isItemIdValid = Regex.ITEM_ID.validate(item_id);
+        try{
+            if(isItemIdValid){
+                itemService.updateItem(item_id, itemDto);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }catch (ItemNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
