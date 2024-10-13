@@ -1,5 +1,6 @@
 package org.example.posspring.service.impl;
 
+import org.example.posspring.customstatuscode.SelectedItemCodes;
 import org.example.posspring.dao.ItemDao;
 import org.example.posspring.dto.ItemStatus;
 import org.example.posspring.dto.impl.ItemDTO;
@@ -44,8 +45,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemStatus getItem(String item_id) {
-        return null;
+        Item fetchedItem = itemDao.getReferenceById(item_id);
+        if (fetchedItem == null) {
+            return new SelectedItemCodes(1,"Item not found");
+        }
+        return mapper.mapToItemDto(fetchedItem);
     }
+
 
     @Override
     public List<ItemDTO> getAllItems() {
