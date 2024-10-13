@@ -17,12 +17,12 @@ public class OrderDetails implements SuperEntity {
     @EmbeddedId
     private OrderItemId id;
 
-    @MapsId("orderId")  // Corrected
+    @MapsId("orderId")
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @MapsId("itemId")  // Corrected
+    @MapsId("itemId")
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
