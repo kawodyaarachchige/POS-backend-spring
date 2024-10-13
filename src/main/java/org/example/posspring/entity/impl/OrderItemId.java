@@ -14,7 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OderItemId implements SuperEntity {
+public class OrderItemId implements SuperEntity {
     private String orderId;
     private String itemId;
 
@@ -22,7 +22,7 @@ public class OderItemId implements SuperEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OderItemId that = (OderItemId) o;
+        OrderItemId that = (OrderItemId) o;
         return orderId.equals(that.orderId) && itemId.equals(that.itemId);
     }
     @Override

@@ -1,6 +1,7 @@
 package org.example.posspring.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -46,5 +47,9 @@ public class WebAppRootConfig {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory);
         return txManager;
+    }
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
     }
 }

@@ -15,7 +15,7 @@ import org.example.posspring.entity.SuperEntity;
 @Builder
 public class OrderDetails implements SuperEntity {
     @EmbeddedId
-    private OderItemId id;
+    private OrderItemId id;
 
     @MapsId("orderId")  // Corrected
     @ManyToOne
