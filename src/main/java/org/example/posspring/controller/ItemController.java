@@ -4,6 +4,7 @@ import org.example.posspring.customstatuscode.SelectedItemCodes;
 import org.example.posspring.dto.ItemStatus;
 import org.example.posspring.dto.impl.ItemDTO;
 import org.example.posspring.exception.DataPersistException;
+import org.example.posspring.exception.ItemNotFoundException;
 import org.example.posspring.service.ItemService;
 import org.example.posspring.util.Regex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,24 @@ public class ItemController {
             return itemService.getItem(propertyId);
         }else{
             return new SelectedItemCodes(1, "Item Id Invalid");
+        }
+    }
+    @DeleteMapping(value = "/{itemId}")
+    public ResponseEntity<Void> deleteItem(@PathVariable("itemId") String item_id){
+        boolean isItemIdValid = Regex.ITEM_ID.validate(item_id);
+        try{
+            if(isItemIdValid){
+                itemService.deleteItem(item_id);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }catch (ItemNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

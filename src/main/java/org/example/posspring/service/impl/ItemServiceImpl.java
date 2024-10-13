@@ -6,6 +6,7 @@ import org.example.posspring.dto.ItemStatus;
 import org.example.posspring.dto.impl.ItemDTO;
 import org.example.posspring.entity.impl.Item;
 import org.example.posspring.exception.DataPersistException;
+import org.example.posspring.exception.ItemNotFoundException;
 import org.example.posspring.service.ItemService;
 import org.example.posspring.util.AppUtil;
 import org.example.posspring.util.Mapping;
@@ -40,6 +41,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(String item_id) {
+        Item fetchedItem = itemDao.getReferenceById(item_id);
+        if (fetchedItem == null) {
+            throw new ItemNotFoundException("Item not found");
+        }
+        itemDao.delete(fetchedItem);
 
     }
 
