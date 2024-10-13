@@ -11,5 +11,6 @@ public interface CustomerService {
     List<CustomerDTO> getAllCustomers();
     CustomerStatus getCustomer(String customer_id);
     void deleteCustomer(String customer_id);
+    void updateCustomer(String customer_id, CustomerDTO customerDto);
 
 }

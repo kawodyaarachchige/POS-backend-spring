@@ -59,4 +59,20 @@ public class CustomerServiceImpl implements CustomerService {
         customerDao.delete(customer);
     }
 
+    @Override
+    public void updateCustomer(String customer_id, CustomerDTO customerDto) {
+        try{
+            Customer customer = customerDao.getReferenceById(customer_id);
+            if (customer == null) {
+                throw new CustomerNotFoundException("Customer not found");
+            }
+            customer.setName(customerDto.getName());
+            customer.setAddress(customerDto.getAddress());
+            customer.setPhone(customerDto.getPhone());
+            customerDao.save(customer);
+        }catch (DataPersistException e){
+            throw new DataPersistException("Failed to update customer");
+        }
+    }
+
 }

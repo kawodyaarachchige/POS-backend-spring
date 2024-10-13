@@ -70,6 +70,24 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping(value = "/{customerId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateCustomer(@PathVariable("customerId") String propertyId, @RequestBody CustomerDTO customerDto) {
+        boolean isCustomerIdValid = Regex.CUSTOMER_ID.validate(propertyId);
+        try {
+            if(isCustomerIdValid){
+                customerService.updateCustomer(propertyId, customerDto);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }catch (CustomerNotFoundException | DataPersistException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 
