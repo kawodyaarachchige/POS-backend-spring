@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.posspring.entity.SuperEntity;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class Order implements SuperEntity {
     @Id
     private String id;
-    private String date;
+    private Date date;
     private double discount_value;
     private double sub_total;
     @ManyToOne
