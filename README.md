@@ -73,4 +73,6 @@ The application employs a robust logging mechanism with different logging levels
 
 ### License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
+
+ Happy Coding :)
