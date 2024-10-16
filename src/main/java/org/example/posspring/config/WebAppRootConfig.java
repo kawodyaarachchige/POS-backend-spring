@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = "org.example.posspring")
 public class WebAppRootConfig {
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         var dmds = new DriverManagerDataSource();
         dmds.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dmds.setUrl("jdbc:mysql://localhost:3306/springPos?createDatabaseIfNotExist=true");
@@ -29,6 +29,7 @@ public class WebAppRootConfig {
         dmds.setPassword("Ijse@1234");
         return dmds;
     }
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
@@ -41,6 +42,7 @@ public class WebAppRootConfig {
         factory.setDataSource(dataSource());
         return factory;
     }
+
     @Bean
     PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 
@@ -48,8 +50,9 @@ public class WebAppRootConfig {
         txManager.setEntityManagerFactory(entityManagerFactory);
         return txManager;
     }
+
     @Bean
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 }

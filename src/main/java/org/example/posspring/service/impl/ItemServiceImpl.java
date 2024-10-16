@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @Transactional
 public class ItemServiceImpl implements ItemService {
@@ -23,6 +24,7 @@ public class ItemServiceImpl implements ItemService {
     private ItemDao itemDao;
     @Autowired
     private Mapping mapper;
+
     @Override
     public void addItem(ItemDTO itemDto) {
         itemDto.setItem_id(AppUtil.generateItemId());
@@ -61,7 +63,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemStatus getItem(String item_id) {
         Item fetchedItem = itemDao.getReferenceById(item_id);
         if (fetchedItem == null) {
-            return new SelectedItemCodes(1,"Item not found");
+            return new SelectedItemCodes(1, "Item not found");
         }
         return mapper.mapToItemDto(fetchedItem);
     }

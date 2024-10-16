@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
             Item orderDetails = itemDao.getReferenceById(orderDetailsDto.getItem_id());
             if (orderDetails == null) {
                 throw new ItemNotFoundException("Item not found");
-            }else if(orderDetails.getQuantity()==0){
+            } else if (orderDetails.getQuantity() == 0) {
                 throw new ItemOutOfStockException("Item out of stock");
             }
 
@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List <OrderDTO> getAllOrders() {
+    public List<OrderDTO> getAllOrders() {
         List<Order> orders = orderDao.findAll();
         List<OrderDTO> orderDtos = new ArrayList<>();
 

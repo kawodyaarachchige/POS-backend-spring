@@ -15,72 +15,76 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/item")
 public class ItemController {
     @Autowired
     private ItemService itemService;
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addItem(@RequestBody ItemDTO itemDto) {
-        try{
+        try {
             itemService.addItem(itemDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (DataPersistException e){
+        } catch (DataPersistException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ItemDTO> getAllItems(){
+    public List<ItemDTO> getAllItems() {
         return itemService.getAllItems();
     }
 
     @GetMapping(value = "/{propertyId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ItemStatus getItem(@PathVariable("propertyId") String propertyId){
+    public ItemStatus getItem(@PathVariable("propertyId") String propertyId) {
         boolean isItemIdValid = Regex.ITEM_ID.validate(propertyId);
-        if (isItemIdValid){
+        if (isItemIdValid) {
             return itemService.getItem(propertyId);
-        }else{
+        } else {
             return new SelectedItemCodes(1, "Item Id Invalid");
         }
     }
+
     @DeleteMapping(value = "/{itemId}")
-    public ResponseEntity<Void> deleteItem(@PathVariable("itemId") String item_id){
+    public ResponseEntity<Void> deleteItem(@PathVariable("itemId") String item_id) {
         boolean isItemIdValid = Regex.ITEM_ID.validate(item_id);
-        try{
-            if(isItemIdValid){
+        try {
+            if (isItemIdValid) {
                 itemService.deleteItem(item_id);
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }else{
+            } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-        }catch (ItemNotFoundException e){
+        } catch (ItemNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping(value = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateItem(@PathVariable("itemId") String item_id, @RequestBody ItemDTO itemDto){
+    public ResponseEntity<Void> updateItem(@PathVariable("itemId") String item_id, @RequestBody ItemDTO itemDto) {
         boolean isItemIdValid = Regex.ITEM_ID.validate(item_id);
-        try{
-            if(isItemIdValid){
+        try {
+            if (isItemIdValid) {
                 itemService.updateItem(item_id, itemDto);
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }else{
+            } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-        }catch (ItemNotFoundException e){
+        } catch (ItemNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

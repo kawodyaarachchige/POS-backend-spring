@@ -28,17 +28,17 @@ public class CustomerServiceImpl implements CustomerService {
     private Mapping mapper;
 
     @Override
-    public void addCustomer(CustomerDTO customerDto){
+    public void addCustomer(CustomerDTO customerDto) {
         customerDto.setCustomer_id(AppUtil.generateCustomerId());
         Customer savedNote = customerDao.save(mapper.mapToCustomer(customerDto));
-        if(savedNote == null){
+        if (savedNote == null) {
             throw new DataPersistException("Failed to add customer");
         }
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
-       return mapper.mapToCustomerDtoList(customerDao.findAll());
+        return mapper.mapToCustomerDtoList(customerDao.findAll());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateCustomer(String customer_id, CustomerDTO customerDto) {
-        try{
+        try {
             Customer customer = customerDao.getReferenceById(customer_id);
             if (customer == null) {
                 throw new CustomerNotFoundException("Customer not found");
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setAddress(customerDto.getAddress());
             customer.setPhone(customerDto.getPhone());
             customerDao.save(customer);
-        }catch (DataPersistException e){
+        } catch (DataPersistException e) {
             throw new DataPersistException("Failed to update customer");
         }
     }

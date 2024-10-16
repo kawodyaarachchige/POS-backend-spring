@@ -14,38 +14,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.time.LocalDate;
+import java.util.stream.Collectors;
+
 @Component
 public class Mapping {
     @Autowired
     private ModelMapper modelMapper;
 
-    public CustomerDTO mapToCustomerDto(Customer customer){
+    public CustomerDTO mapToCustomerDto(Customer customer) {
         return modelMapper.map(customer, CustomerDTO.class);
     }
-    public Customer mapToCustomer(CustomerDTO customerDto){
+
+    public Customer mapToCustomer(CustomerDTO customerDto) {
+
         return modelMapper.map(customerDto, Customer.class);
     }
-    public List<CustomerDTO> mapToCustomerDtoList(List<Customer> customers){
-        return modelMapper.map(customers, List.class);
+
+    public List<CustomerDTO> mapToCustomerDtoList(List<Customer> customers) {
+        return customers.stream()
+                .map(customer -> modelMapper.map(customer, CustomerDTO.class))
+                .collect(Collectors.toList());
     }
 
-    public ItemDTO mapToItemDto(Item item){
-        return modelMapper.map(item,ItemDTO.class);
-    }
-    public Item mapToItem(ItemDTO itemDto){
-        return modelMapper.map(itemDto,Item.class);
-    }
-    public List<ItemDTO> mapToItemDtoList(List<Item> items){
-        return modelMapper.map(items, List.class);
+    public ItemDTO mapToItemDto(Item item) {
+        return modelMapper.map(item, ItemDTO.class);
     }
 
+    public Item mapToItem(ItemDTO itemDto) {
+        return modelMapper.map(itemDto, Item.class);
+    }
 
-    public Order mapToOrder(OrderDTO OrderDto){
+    public List<ItemDTO> mapToItemDtoList(List<Item> items) {
+        return items.stream()
+                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public Order mapToOrder(OrderDTO OrderDto) {
         return modelMapper.map(OrderDto, Order.class);
     }
 
-    public OrderDTO mapToOrderDto(Order order, List<OrderDetailsDTO> orderDetailsDtos){
+    public OrderDTO mapToOrderDto(Order order, List<OrderDetailsDTO> orderDetailsDtos) {
         return OrderDTO.builder()
                 .id(order.getId())
                 .customer_id(order.getCustomer().getCustomer_id())
@@ -56,7 +65,7 @@ public class Mapping {
                 .build();
     }
 
-    public OrderDetailsDTO mapToOrderDetailsDto(OrderDetails orderDetails){
+    public OrderDetailsDTO mapToOrderDetailsDto(OrderDetails orderDetails) {
         return OrderDetailsDTO.builder()
                 .order_id(orderDetails.getId().getOrderId())
                 .item_id(orderDetails.getId().getItemId())

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/order")
 public class OrderController {
@@ -28,35 +29,35 @@ public class OrderController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addOrder(@RequestBody OrderDTO orderDto) {
-        try{
+        try {
             orderService.addOrder(orderDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (CustomerNotFoundException | ItemNotFoundException | ItemOutOfStockException e){
+        } catch (CustomerNotFoundException | ItemNotFoundException | ItemOutOfStockException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping
-    public List<OrderDTO> getAllOrders(){
+    public List<OrderDTO> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     @GetMapping(value = "/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public OrderStatus getOrder(@PathVariable("orderId") String id) {
         boolean isOrderIdValid = Regex.ORDER_ID.validate(id);
-        try{
-            if(isOrderIdValid){
+        try {
+            if (isOrderIdValid) {
                 return orderService.getOrder(id);
-            }else{
+            } else {
                 return new SelectedOrderStatus(1, "Order Id Invalid");
             }
-        }catch (EntityNotFoundException | OrderNotFoundException e){
+        } catch (EntityNotFoundException | OrderNotFoundException e) {
             e.printStackTrace();
-            return new SelectedOrderStatus(2,"Order Not Found");
+            return new SelectedOrderStatus(2, "Order Not Found");
         }
     }
 
