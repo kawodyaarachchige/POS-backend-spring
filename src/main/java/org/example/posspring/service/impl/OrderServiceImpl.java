@@ -15,6 +15,8 @@ import org.example.posspring.exception.OrderNotFoundException;
 import org.example.posspring.service.OrderService;
 import org.example.posspring.util.AppUtil;
 import org.example.posspring.util.Mapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
     private ItemDao itemDao;
     @Autowired
     private OrderDetailsDao orderDetailsDao;
+    static Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
 
     @Override
@@ -47,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
         Customer orderPlacingCustomer = customerDao.getReferenceById(orderDto.getCustomer_id());
         if (orderPlacingCustomer == null) {
+            logger.error("Customer not in database , Customer not found exception occurred");
             throw new CustomerNotFoundException("Customer not found");
         }
         order.setCustomer(orderPlacingCustomer);
@@ -60,8 +64,10 @@ public class OrderServiceImpl implements OrderService {
             OrderItemId orderItemId = new OrderItemId(orderId, orderDetailsDto.getItem_id());
             Item orderDetails = itemDao.getReferenceById(orderDetailsDto.getItem_id());
             if (orderDetails == null) {
+                logger.error("Item not in database , Item not found exception occurred");
                 throw new ItemNotFoundException("Item not found");
             } else if (orderDetails.getQuantity() == 0) {
+                logger.error("Item out of stock , Item out of stock exception occurred (Stock Remaining :"+orderDetails.getQuantity()+")");
                 throw new ItemOutOfStockException("Item out of stock");
             }
 
