@@ -1,6 +1,7 @@
 <h1 align="center">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=700&height=70&duration=4000&lines=POS+RESTful+API+with+Spring+Framework&color=800080" />
+    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=700&height=70&duration=4000&lines=POS+RESTful+API+with+Spring+Framework&color=90EE90" />
 </h1>
+
 
 ### Description
 This is a backend implementation of a POS (Point of Sale) Management System using the Spring Framework and other Java-based technologies. The API provides endpoints to manage customers, items, and orders. The project is built using Spring Boot for RESTful services, Hibernate for database interaction, and MySQL as the database. Lombok is used to reduce boilerplate code.
